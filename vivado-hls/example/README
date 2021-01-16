@@ -1,0 +1,11 @@
+This is an example that works with the LLVM pass in ../llvm_pass. 
+
+We have provided the output of SVF for andersen, flow and flow+context analyses.
+
+It is also possible to execute our analysis without an external result. For each indirect access we select between all global variables. Remove config file in this case.
+
+Otherwise, copy the respective output to pointsTo.Vitis, so that the LLVM pass will pick up to points-to relation that you want. You also need a config file. This file was more for us to invoke the right pointer analysis configuration (SVF). The LLVM pass just check if this file exists. 
+
+The output of the LLVM pass can be seen in the log file.
+
+This example was reported to Xilinx and confirmed as an issue: https://bit.ly/vivado-hls-pointer-bug. We have since fixed it using our own pass.

@@ -1,0 +1,4 @@
+This LLVM pass is a prototype that enumerates all indirect pointer acccesses. 
+
+We can only handle global variables in this version. It will be nice to have local variables too, i.e. support AllocaInst. 
+

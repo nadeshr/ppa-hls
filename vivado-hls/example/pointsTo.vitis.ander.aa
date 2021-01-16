@@ -1,0 +1,7 @@
+f:store:@b:@p:0
+test:call:f:<badref>:0
+test:load:%0:@p:2:@b:@a
+test:load:%1:%0:0
+test:store:1:@a:0
+test:store:2:@b:0
+test:store:@a:@p:0

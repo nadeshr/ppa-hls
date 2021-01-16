@@ -1,0 +1,106 @@
+Pushing @b = common global i32 0, align 4, !dbg !0
+Pushing @p = common global i32* null, align 8, !dbg !6
+Pushing @a = common global i32 0, align 4, !dbg !11
+Double pointer spotted: @p = common global i32* null, align 8, !dbg !6
+Creating global variable @p_index = global i32 0Function is f
+Instruction is   store i32* @b, i32** @p, align 8, !dbg !20
+Size is 0
+Found a match!
+Function is test
+Instruction is   store i32 1, i32* @a, align 4, !dbg !20
+Size is 0
+Found a match!
+Function is test
+Instruction is   store i32 2, i32* @b, align 4, !dbg !21
+Size is 0
+Found a match!
+Function is test
+Instruction is   store i32* @a, i32** @p, align 8, !dbg !22
+Size is 0
+Found a match!
+Function is test
+Instruction is   %0 = load i32*, i32** @p, align 8, !dbg !24
+Size is 0
+Found a match!
+Found inst: @b
+Found inst: @a
+Function is test
+Instruction is   %1 = load i32, i32* %0, align 4, !dbg !25
+Size is 0
+Found a match!
+Instruction   store i32 2, i32* @b, align 4, !dbg !21 points to :
+Instruction   store i32* @a, i32** @p, align 8, !dbg !22 points to :
+Instruction   %0 = load i32*, i32** @p, align 8, !dbg !24 points to :
+Value @b = common global i32 0, align 4, !dbg !0
+Value @a = common global i32 0, align 4, !dbg !11
+Instruction   %1 = load i32, i32* %0, align 4, !dbg !25 points to :
+Instruction   store i32* @b, i32** @p, align 8, !dbg !20 points to :
+Instruction   store i32 1, i32* @a, align 4, !dbg !20 points to :
+
+size of indexMap is 1
+Return value was 256
+Found config!
+Instr:   store i32* @b, i32** @p, align 8, !dbg !20
+Store:   store i32* @b, i32** @p, align 8, !dbg !20
+operand 0: @b = common global i32 0, align 4, !dbg !0
+operand 1: @p = common global i32* null, align 8, !dbg !6GV: @b = common global i32 0, align 4, !dbg !0
+Index: 1
+
+Index is 1
+Injecting store   store volatile i32 1, i32* @p_index, !dbg !20
+Instr:   ret void, !dbg !21
+Instr:   store i32 1, i32* @a, align 4, !dbg !20
+Store:   store i32 1, i32* @a, align 4, !dbg !20
+operand 0: i32 1
+operand 1: @a = common global i32 0, align 4, !dbg !11
+Instr:   store i32 2, i32* @b, align 4, !dbg !21
+Store:   store i32 2, i32* @b, align 4, !dbg !21
+operand 0: i32 2
+operand 1: @b = common global i32 0, align 4, !dbg !0
+Instr:   store i32* @a, i32** @p, align 8, !dbg !22
+Store:   store i32* @a, i32** @p, align 8, !dbg !22
+operand 0: @a = common global i32 0, align 4, !dbg !11
+operand 1: @p = common global i32* null, align 8, !dbg !6GV: @a = common global i32 0, align 4, !dbg !11
+Index: 3
+
+Index is 3
+Injecting store   store volatile i32 3, i32* @p_index, !dbg !22
+Instr:   call void @f(), !dbg !23
+Instr:   %0 = load i32*, i32** @p, align 8, !dbg !24
+Found load:   %0 = load i32*, i32** @p, align 8, !dbg !24
+Direct load:  %p_index_load = load volatile i32, i32* @p_index, !dbg !24
+Instr:   %1 = load i32, i32* %0, align 4, !dbg !25
+Found load:   %1 = load i32, i32* %0, align 4, !dbg !25
+Found indirect load:   %0 = load i32*, i32** @p, align 8, !dbg !24
+Replacement load:   %p_index_load = load volatile i32, i32* @p_index, !dbg !24
+ptsTo size: 2
+Value @b = common global i32 0, align 4, !dbg !0
+currLoad   %b_load = load volatile i32, i32* @b, !dbg !25
+Value @a = common global i32 0, align 4, !dbg !11GV: @a = common global i32 0, align 4, !dbg !11
+Index: 3
+
+prevLoad  %a_select = select i1 %a_cmp, i32 %a_load, i32 %b_load, !dbg !25
+currLoad  %a_load = load volatile i32, i32* @a, !dbg !25
+currCmp  %a_cmp = icmp eq i32 3, %p_index_load, !dbg !25
+currSelect  %a_select = select i1 %a_cmp, i32 %a_load, i32 %b_load, !dbg !25
+Pushed replacement map
+  %1 = load i32, i32* %0, align 4, !dbg !25 to   %a_select = select i1 %a_cmp, i32 %a_load, i32 %b_load, !dbg !25
+Instr:   ret i32 %1, !dbg !26
+Replacement block
+Use of:   %1 = load i32, i32* %0, align 4, !dbg !25
+Repl use by:   %a_select = select i1 %a_cmp, i32 %a_load, i32 %b_load, !dbg !25
+User:   ret i32 %1, !dbg !26
+Replacing User:   ret i32 %1, !dbg !26
+with
+  ret i32 %a_select, !dbg !26
+Size is 0
+Replacement block
+Use of:   %0 = load i32*, i32** @p, align 8, !dbg !24
+Repl use by:   %p_index_load = load volatile i32, i32* @p_index, !dbg !24
+User:   %1 = load i32, i32* %0, align 4, !dbg !25
+Size is 2
+Removing:   %1 = load i32, i32* %0, align 4, !dbg !25
+Removing:   %0 = load i32*, i32** @p, align 8, !dbg !24
+Removing:   store i32* @a, i32** @p, align 8, !dbg !22
+Removing:   store i32* @b, i32** @p, align 8, !dbg !20
+PTSINFO! InstCount 6 PtsCount 7
